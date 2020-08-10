@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block player %}
+
+<h1> Welcome To Guessify </h1>
+<div class='content-section'>
+    <form method='POST' action=''>
+    {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">  Enter your spotify link below </legend>
+      </fieldset>
+
+      <div class="form-group">
+          {{ form.link.label(class="form-control-label") }}
+          {{ form.link(class="form-control form-control-lg") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+  </form>
+</div>
+
+
+<div class=
+
+
+
+
+
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
+<script>
+  window.onSpotifyWebPlaybackSDKReady = () => {
+    const token = 'BQCwRWHrDOhONjpEa1njUZFoUicIE4HTRsq-XpkPg8MxiChmD74vHNo3w2CE-ku1J9ADuw-7cf0cGzpUr7K5eCwYlGVtMn9B9GAHX7dNicyHBVuyBbAJsrBE852BPeh9XC8ePmXrYqmLjnMCWeVHVWik3g4UeJqdGw';
+    const player = new Spotify.Player({
+      name: 'Web Playback SDK Quick Start Player',
+      getOAuthToken: cb => { cb(token); }
+
+    });
+
+    // Error handling
+    player.addListener('initialization_error', ({ message }) => { console.error(message); });
+    player.addListener('authentication_error', ({ message }) => { console.error(message); });
+    player.addListener('account_error', ({ message }) => { console.error(message); });
+    player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+    // Playback status updates
+    player.addListener('player_state_changed', state => { console.log(state); });
+
+    // Ready
+    player.addListener('ready', ({ device_id }) => {
+      console.log('Ready with Device ID', device_id);
+    });
+
+    // Not Ready
+    player.addListener('not_ready', ({ device_id }) => {
+      console.log('Device ID has gone offline', device_id);
+    });
+
+    // Connect to the player!
+    player.connect();
+
+
+  };
+</script>
+
+{% endblock player %}
